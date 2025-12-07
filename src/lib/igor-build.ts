@@ -261,9 +261,9 @@ export class Gms2Compile {
     const buildOptimization = this.yyc ? "YYC" : "VM";
 
     args.push(
-      `/uf='${this.userDir}'`,
+      `/uf=${this.userDir}`,
       `/rp=${this.runtimePath}`,
-      `/project=${this.projectDir}`,
+      `/project="${this.projectDir}"`,
       `/cache=${buildCache}`,
       `/temp=${buildTempDir}`,
       `/of=${join(buildTempDir, this.baseName + ".win")}`,
