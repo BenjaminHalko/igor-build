@@ -99,7 +99,7 @@ export class Gms2Compile {
       throw new Error(`Project file does not exist: ${this.projectDir}`);
     }
     this.baseName = basename(this.projectDir, extname(this.projectDir)).replace(
-      " ",
+      /[^a-zA-Z0-9]/g,
       "_",
     );
     this.exportPlatform = options.exportPlatform;
@@ -186,10 +186,7 @@ export class Gms2Compile {
     const buildTempDir = this.localSettings[
       "machine.General Settings.Paths.IDE.TempFolder"
     ] as string;
-    const originalBaseName = this.baseName;
-    //Convert originalBaseName to replace all space and hyphen with underscore
-    const baseName = originalBaseName.replace(/[-\s]/g, "_");
-    return join(buildTempDir, baseName, `${baseName}.xcodeproj`);
+    return join(buildTempDir, this.baseName, `${this.baseName}.xcodeproj`);
   }
 
   androidGradleOutputDir() {
@@ -319,14 +316,13 @@ export class Gms2Compile {
       fs.writeJSONSync(targetOptionsFn, targetOptions);
       args.push(`/targetOptions=${targetOptionsFn}`);
 
-      const baseName = this.baseName.replace(/[-\s]/g, "_");
       const xcUserDir = join(
         homedir(),
         "gamemakerstudio2",
         "GM_MAC",
-        baseName,
-        baseName,
-        `${baseName}.xcodeproj`,
+        this.baseName,
+        this.baseName,
+        `${this.baseName}.xcodeproj`,
         "xcuserdata",
       );
       fs.ensureDirSync(xcUserDir);

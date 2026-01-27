@@ -35399,7 +35399,7 @@ class Gms2Compile {
         if (!lib_default().existsSync(this.projectDir)) {
             throw new Error(`Project file does not exist: ${this.projectDir}`);
         }
-        this.baseName = (0,external_path_.basename)(this.projectDir, (0,external_path_.extname)(this.projectDir)).replace(" ", "_");
+        this.baseName = (0,external_path_.basename)(this.projectDir, (0,external_path_.extname)(this.projectDir)).replace(/[^a-zA-Z0-9]/g, "_");
         this.exportPlatform = options.exportPlatform;
         this.destinationDir = options.destinationDir || (0,external_path_.resolve)("out");
         this.config = options.config || "Default";
@@ -35468,10 +35468,7 @@ class Gms2Compile {
     }
     iOSXCodeOutputDir() {
         const buildTempDir = this.localSettings["machine.General Settings.Paths.IDE.TempFolder"];
-        const originalBaseName = this.baseName;
-        //Convert originalBaseName to replace all space and hyphen with underscore
-        const baseName = originalBaseName.replace(/[-\s]/g, "_");
-        return (0,external_path_.join)(buildTempDir, baseName, `${baseName}.xcodeproj`);
+        return (0,external_path_.join)(buildTempDir, this.baseName, `${this.baseName}.xcodeproj`);
     }
     androidGradleOutputDir() {
         const buildCacheDir = this.localSettings["machine.General Settings.Paths.IDE.AssetCacheFolder"];
@@ -35564,8 +35561,7 @@ class Gms2Compile {
             lib_default().ensureFileSync(targetOptionsFn);
             lib_default().writeJSONSync(targetOptionsFn, targetOptions);
             args.push(`/targetOptions=${targetOptionsFn}`);
-            const baseName = this.baseName.replace(/[-\s]/g, "_");
-            const xcUserDir = (0,external_path_.join)((0,external_os_.homedir)(), "gamemakerstudio2", "GM_MAC", baseName, baseName, `${baseName}.xcodeproj`, "xcuserdata");
+            const xcUserDir = (0,external_path_.join)((0,external_os_.homedir)(), "gamemakerstudio2", "GM_MAC", this.baseName, this.baseName, `${this.baseName}.xcodeproj`, "xcuserdata");
             lib_default().ensureDirSync(xcUserDir);
         }
         if (this.exportPlatform == "operagx") {
