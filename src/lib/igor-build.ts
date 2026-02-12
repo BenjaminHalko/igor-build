@@ -67,7 +67,7 @@ export interface Gms2CompileOptions {
    *
    */
   yyc?: boolean;
-  gxPackageType?:
+  packageType?:
     | "OperaGXPackage_Zip"
     | "OperaGXPackage_Gamestrip"
     | "OperaGXPackage_Wallpaper"
@@ -86,11 +86,7 @@ export class Gms2Compile {
   name: string;
   private yyc = true;
   private runtimePath: string;
-  private gxPackageType?:
-    | "OperaGXPackage_Zip"
-    | "OperaGXPackage_Gamestrip"
-    | "OperaGXPackage_Wallpaper"
-    | string;
+  private packageType?: "Default" | "Zip" | "Gamestrip" | "Wallpaper" | string;
 
   constructor(options: Gms2CompileOptions) {
     this.userDir = options.userDir;
@@ -113,7 +109,7 @@ export class Gms2Compile {
       `${this.baseName}.${Gms2Compile.inferOutputExtension(this.exportPlatform)}`;
 
     this.yyc = options.yyc;
-    this.gxPackageType = options.gxPackageType || "OperaGXPackage_Zip";
+    this.packageType = options.packageType || "Zip";
 
     this.localSettings = fs.readJSONSync(
       join(this.userDir, "local_settings.json"),
