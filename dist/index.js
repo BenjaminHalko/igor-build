@@ -35453,7 +35453,7 @@ class Gms2Compile {
     static inferOutputExtension(platform) {
         return ({
             windows: "zip",
-            linux: "zip",
+            linux: "AppImage",
             mac: "zip",
             android: "aab",
             switch: "nsp",

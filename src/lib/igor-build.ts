@@ -167,7 +167,7 @@ export class Gms2Compile {
     return (
       {
         windows: "zip",
-        linux: "zip",
+        linux: "AppImage",
         mac: "zip",
         android: "aab",
         switch: "nsp",
