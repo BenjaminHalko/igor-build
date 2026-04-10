@@ -31,7 +31,6 @@ export async function run() {
       yyc,
       config,
       name,
-      gxPackageType: gxPackageType,
     };
 
     const compiler = new Gms2Compile(options);

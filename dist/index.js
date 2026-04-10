@@ -35410,7 +35410,7 @@ class Gms2Compile {
             options.name ||
                 `${this.baseName}.${Gms2Compile.inferOutputExtension(this.exportPlatform)}`;
         this.yyc = options.yyc;
-        this.gxPackageType = options.gxPackageType || "OperaGXPackage_Zip";
+        this.packageType = options.packageType || "Zip";
         this.localSettings = lib_default().readJSONSync((0,external_path_.join)(this.userDir, "local_settings.json"));
         this.targetRuntime = this.localSettings["targetRuntime"];
         this.runtimePath = //Infer the runtime path
@@ -35564,9 +35564,6 @@ class Gms2Compile {
             const xcUserDir = (0,external_path_.join)((0,external_os_.homedir)(), "gamemakerstudio2", "GM_MAC", this.baseName, this.baseName, `${this.baseName}.xcodeproj`, "xcuserdata");
             lib_default().ensureDirSync(xcUserDir);
         }
-        if (this.exportPlatform == "operagx") {
-            args.push(`/packagetype=${this.gxPackageType}`);
-        }
         args.push("--", igorCommand.worker, igorCommand.command);
         if ((0,external_os_.platform)() == "darwin") {
             for (const i in args) {
@@ -35660,7 +35657,6 @@ async function run() {
             yyc,
             config,
             name,
-            gxPackageType: gxPackageType,
         };
         const compiler = new Gms2Compile(options);
         const child = await compiler.build();

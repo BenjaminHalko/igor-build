@@ -324,10 +324,6 @@ export class Gms2Compile {
       fs.ensureDirSync(xcUserDir);
     }
 
-    if (this.exportPlatform == "operagx") {
-      args.push(`/packagetype=${this.gxPackageType}`);
-    }
-
     args.push("--", igorCommand.worker, igorCommand.command);
 
     if (osPlatform() == "darwin") {
